@@ -49,3 +49,16 @@ def transition_matrix(events: pd.DataFrame, category_col: str, min_length: int =
 
 def self_transition_rate(counts: pd.DataFrame) -> float:
     return np.trace(counts.values) / counts.values.sum()
+
+
+def self_transition_rate_expected(counts: pd.DataFrame) -> float:
+    """Expected self-transition rate if consecutive events were independent."""
+    total = counts.values.sum()
+    row_share = counts.sum(axis=1).values / total
+    col_share = counts.sum(axis=0).values / total
+    return (row_share * col_share).sum()
+
+
+def self_transition_lift(counts: pd.DataFrame) -> float:
+    """Observed over expected self-transition rate; comparable across group counts."""
+    return self_transition_rate(counts) / self_transition_rate_expected(counts)

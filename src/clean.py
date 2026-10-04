@@ -8,9 +8,7 @@ from .config import SERVICE_CODES
 
 
 def load_raw(path: Path) -> pd.DataFrame:
-    # Both sheets share a ~9-day overlap window at the end of 2010; do not tag
-    # rows by sheet of origin, or genuine cross-sheet duplicates will survive
-    # the dedup step below.
+    # Do not tag rows by sheet: the sheets overlap by 9 days and tagging breaks dedup.
     sheets = pd.read_excel(path, sheet_name=None, engine="openpyxl")
     df = pd.concat(sheets.values(), ignore_index=True)
     df["Invoice"] = df["Invoice"].astype(str)

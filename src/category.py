@@ -48,7 +48,7 @@ def assign_category(df: pd.DataFrame, communities: list[frozenset]) -> pd.Series
 
 
 def category_quality(df: pd.DataFrame, category_col: str) -> dict:
-    """Coverage, median dominant-category revenue share, and mixed-basket rate."""
+    """Coverage, median share of the top category per event, and rate of mixed events."""
     day = df["InvoiceDate"].dt.normalize()
     grouped = df.assign(Day=day).groupby(["CustomerID", "Day", category_col])["Revenue"].sum()
     top_per_event = grouped.groupby(level=[0, 1]).max()

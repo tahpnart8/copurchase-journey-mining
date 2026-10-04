@@ -6,7 +6,8 @@ data/*.xlsx
 data/*.csv
 data/*.pkl
 
-outputs/
+outputs/*
+!outputs/figures/
 
 .venv/
 venv/
